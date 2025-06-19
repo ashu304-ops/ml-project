@@ -1,0 +1,30 @@
+- name: Deploy Flask ML App using Docker and Kubernetes
+  hosts: all
+  become: yes
+
+  vars:
+    docker_image: yourdockerhubusername/mechanical-ml-app:latest
+    project_path: /home/ubuntu/mechanical-ml-flask-project
+
+  tasks:
+
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Pull latest code (for k8s manifests)
+      git:
+        repo: 'https://github.com/YOUR_USERNAME/mechanical-ml-flask-project.git'
+        dest: "{{ project_path }}"
+        force: yes
+
+    - name: Pull Docker image from Docker Hub
+      shell: docker pull {{ docker_image }}
+
+    - name: Apply Kubernetes Deployment
+      shell: kubectl apply -f {{ project_path }}/k8s/deployment.yaml
+
+    - name: Apply Kubernetes Service
+      shell: kubectl apply -f {{ project_path }}/k8s/service.yaml

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mechanical-ml-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mechanical-ml
+  template:
+    metadata:
+      labels:
+        app: mechanical-ml
+    spec:
+      containers:
+        - name: mechanical-ml
+          image: yourdockerhub/mechanical-ml-app:latest
+          ports:
+            - containerPort: 5000
