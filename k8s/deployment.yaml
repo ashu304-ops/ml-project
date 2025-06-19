@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mechanical-ml-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mechanical-ml
@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: mechanical-ml
-          image: yourdockerhub/mechanical-ml-app:latest
+          image: ashu304/mechanical-ml-app:latest
           ports:
             - containerPort: 5000
